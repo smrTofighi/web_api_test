@@ -8,7 +8,7 @@ namespace CityInfoApi.Models
 {
     public class PointOfInterestForCreationDto
     {
-        [Required]
+        [Required (ErrorMessage ="The name city is required!")]
         [MaxLength(50)]
         public string Name { get; set; } = string.Empty;
         [MaxLength(200)]

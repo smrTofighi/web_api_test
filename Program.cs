@@ -1,4 +1,7 @@
+using CityInfoApi.DBContext;
+using CityInfoApi.Repositories;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 
+builder.Services.AddDbContext<CityInfoDBContext>(option =>
+{
+    option.UseSqlite(builder.Configuration["ConnectionStrings:CityConnectionString"]);
+});
+builder.Services.AddScoped<ICityInfoRepository, CityInfoRepository>();
 var app = builder.Build();
 #region Pipeline
 if (app.Environment.IsDevelopment())
